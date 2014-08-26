@@ -30,10 +30,10 @@
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': [
-        'stock',
-        'product',
         'resource',
-        'delivery'
+        'sale',
+        'purchase',
+        'stock_available_immediately',
         ],
     'data': [
 #        'stock_view.xml',
