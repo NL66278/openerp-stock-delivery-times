@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#    stock_delivery_times_advanced for OpenERP
+#    stock_delivery_times_working_days for OpenERP
 #    Copyright (C) 2011-2014 Akretion
 #    Author: Benoît Guillot <benoit.guillot@akretion.com>
 #
@@ -19,9 +19,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-import stock
-import product
-import sale
-import purchase
-from . import wizard
-from . import delivery
+from openerp.osv import orm, fields
+
+
+class delivery_carrier(orm.Model):
+    _inherit = "delivery.carrier"
+
+    _columns = {
+        'delivery_lead_time': fields.integer('Delivery Lead Time'),
+        'calendar_id': fields.many2one(
+            'resource.calendar',
+            'Carrier Working time'),
+        }
+

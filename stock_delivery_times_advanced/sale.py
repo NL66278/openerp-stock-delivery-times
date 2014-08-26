@@ -29,7 +29,7 @@ class sale_order_line(orm.Model):
         'supplier_shortage': fields.date('Supplier Shortage'),
     }
 
-    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+    def product_id_change(self, cr, uid, ids, pricelist, product_id, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False,
             fiscal_position=False, flag=False, context=None):
@@ -39,24 +39,13 @@ class sale_order_line(orm.Model):
         if context is None:
             context = {}
         res = super(sale_order_line, self).product_id_change(
-            cr, uid, ids, pricelist, product, qty, uom, qty_uos, uos, name,
+            cr, uid, ids, pricelist, product_id, qty, uom, qty_uos, uos, name,
             partner_id, lang, update_tax, date_order, packaging,
             fiscal_position, flag, context=context)
         product_obj = self.pool['product.product']
-        if product:
-            total_qty = 0
-            if context.get('parent') and context.get('parent').get('id'):
-                order = self.pool['sale.order'].browse(
-                    cr, uid, context.get('parent').get('id'), context=context)
-                for line_product in order.order_line:
-                    if line_product.product_id.id == product and ids and line_product.id != ids[0]:
-                        total_qty += line_product.product_uom_qty
-            total_qty = total_qty + qty
-            info_product = product_obj.browse(cr, uid, product, context=context)
-            delay, supplier_shortage = product_obj._get_delays(
-                cr, uid, info_product, qty=total_qty, context=context)
-            res['value']['delay'] = delay
-            res['value']['supplier_shortage'] = supplier_shortage
+        if product_id:
+            product = product_obj.browse(cr, uid, product_id, context=context)
+            res['value']['supplier_shortage'] = product.supplier_info_id and product.supplier_info_id.supplier_shortage or False
         return res
 
 
