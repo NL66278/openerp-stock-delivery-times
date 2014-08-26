@@ -28,10 +28,9 @@
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': [
-        'sale',
         'stock_delivery_times_working_days',
-        'purchase',
-    ],
+        'delivery',
+        ],
     'data': [
         'wizard/stock_change_date_view.xml',
         'stock_view.xml',
