@@ -22,7 +22,7 @@
 from openerp.osv import orm
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
-from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class purchase_order(orm.Model):

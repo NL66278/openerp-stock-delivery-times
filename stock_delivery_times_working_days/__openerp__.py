@@ -36,7 +36,7 @@
         'delivery'
         ],
     'data': [
-        'view/stock_view.xml',
+#        'view/stock_view.xml',
         'view/res_company_view.xml',
         'view/delivery_view.xml',
         'view/purchase_view.xml',

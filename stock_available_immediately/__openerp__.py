@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-###############################################################################
 #
-#    stock_delivery_times_delivery_date_on_move for OpenERP
-#    Copyright (C) 2011-2014 Akretion
-#    Author: Benoît Guillot <benoit.guillot@akretion.com>
+#
+#    Author: Guewen Baconnier
+#    Copyright 2010-2012 Camptocamp SA
+#    Copyright (C) 2011 Akretion Sébastien BEAU <sebastien.beau@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,5 +18,23 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-###############################################################################
-import stock
+#
+
+
+{
+    "name": "Immediately Usable Stock Quantity",
+    "version": "1.0",
+    "depends": ["product", "stock", ],
+    "author": "Camptocamp",
+    "license": "AGPL-3",
+    "description": """
+Compute the immediately usable stock.
+Immediately usable is computed : Quantity on Hand - Outgoing Stock.
+""",
+    "website": "http://tinyerp.com/module_account.html",
+    "category": "Generic Modules/Stock",
+    "data": ["product_view.xml", 
+             ],
+    "active": False,
+    "installable": True
+}

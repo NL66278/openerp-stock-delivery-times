@@ -24,7 +24,7 @@ from openerp.osv import orm
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-import pooler
+import openerp.pooler
 
 
 class procurement_order(orm.Model):
