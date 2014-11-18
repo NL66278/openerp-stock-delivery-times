@@ -31,7 +31,7 @@
     'depends': [
         'sale',
         'stock_delivery_times_working_days',
-        'stock_available_immediately',
+        'purchase',
         ],
     'data': [
         'wizard/stock_change_date_view.xml',

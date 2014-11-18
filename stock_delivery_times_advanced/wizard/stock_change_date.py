@@ -119,7 +119,7 @@ class stock_change_date(orm.TransientModel):
                 po_line_ids = po_line_obj.search(
                     cr, uid, [
                         ('product_id', '=', move.product_id.id),
-                        ('order_id', '=', change.picking_id.purchase_id.id)
+                        ('order_id', '=', change.picking_id.group_id.id)
                         ], context=context)
                 po_line_obj.write(cr, uid, po_line_ids,
                                   {'date_planned': move.new_date_expected},
