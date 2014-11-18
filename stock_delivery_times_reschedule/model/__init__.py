@@ -20,25 +20,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-
-{
-    'name': 'stock_delivery_times_reschedule',
-    'version': '0.1',
-    'category': 'Generic Modules/Others',
-    'license': 'AGPL-3',
-    'description': """empty""",
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com/',
-    'depends': [
-        'procurement',
-        'stock_delivery_times_working_days',
-        ],
-    'data': [
-        'view/company_view.xml',
-        'view/procurement_view.xml',
-        ],
-    'demo': [],
-    'installable': True,
-    'active': False,
-}
-
+from . import procurement
+from . import scheduler
+from . import company
+from . import product
+from . import sale

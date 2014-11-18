@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#    stock_delivery_times_reschedule for OpenERP
+#    stock_delivery_times_delivery_date_on_move for OpenERP
 #    Copyright (C) 2011-2014 Akretion
 #    Author: Benoît Guillot <benoit.guillot@akretion.com>
-#            Sebastien Beau <sebastien.beau@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,25 +19,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-
-{
-    'name': 'stock_delivery_times_reschedule',
-    'version': '0.1',
-    'category': 'Generic Modules/Others',
-    'license': 'AGPL-3',
-    'description': """empty""",
-    'author': 'Akretion',
-    'website': 'http://www.akretion.com/',
-    'depends': [
-        'procurement',
-        'stock_delivery_times_working_days',
-        ],
-    'data': [
-        'view/company_view.xml',
-        'view/procurement_view.xml',
-        ],
-    'demo': [],
-    'installable': True,
-    'active': False,
-}
-
+from . import stock

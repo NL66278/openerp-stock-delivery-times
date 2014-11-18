@@ -36,10 +36,10 @@
         'delivery'
         ],
     'data': [
-        'stock_view.xml',
-        'res_company_view.xml',
-        'delivery_view.xml',
-        'purchase_view.xml',
+        'view/stock_view.xml',
+        'view/res_company_view.xml',
+        'view/delivery_view.xml',
+        'view/purchase_view.xml',
         ],
     'demo': [],
     'installable': True,

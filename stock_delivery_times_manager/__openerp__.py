@@ -30,8 +30,8 @@
     'website': 'http://www.akretion.com/',
     'depends': ['stock'],
     'data': [
-       'stock_view.xml',
-       'stock_data.xml',
+       'view/stock_view.xml',
+       'view/stock_data.xml',
         ],
     'demo': [],
     'installable': False,
