@@ -30,6 +30,7 @@
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': [
+        'mrp',
         'procurement',
         'stock_delivery_times_working_days',
         ],
