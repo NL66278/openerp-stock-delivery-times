@@ -84,7 +84,7 @@ class purchase_order_line(orm.Model):
             seller_delay = supplierinfo.delay
         else:
             seller_delay = 0
-        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATE_FORMAT)
+        start_date = datetime.strptime(start_date, DEFAULT_SERVER_DATETIME_FORMAT)
         date_planned = cal_obj._get_date(cr, uid, None, start_date,
                                          seller_delay, context=context)
         return date_planned
