@@ -93,26 +93,25 @@ class purchase_order_line(orm.Model):
 class procurement_order(orm.Model):
     _inherit = 'procurement.order'
 
-    def _get_purchase_schedule_date(self, cr, uid, procurement, company, context=None):
+    def _get_purchase_schedule_date(self, cr, uid, procurement, company,
+                                    context=None):
         """This method overload the method _get_schedule_date in order to have
             a good calculation of the date.
         """
         cal_obj = self.pool['resource.calendar']
-        delay = -procurement.product_id.sale_delay
+        delay = - (procurement.product_id.sale_delay
+                   + procurement.company_id.po_lead)
         date_planned = datetime.strptime(procurement.date_planned,
                                          DEFAULT_SERVER_DATETIME_FORMAT)
-        schedule_date = cal_obj._get_date(cr, uid, None, date_planned, delay,
-                                          context=context)
-        po_lead = procurement.company_id.po_lead
-        schedule_date = (schedule_date - relativedelta(days=po_lead))
-        return schedule_date
+        return cal_obj._get_date(cr, uid, None, date_planned, delay,
+                                 context=context)
 
-    def _get_purchase_order_date(self, cr, uid, procurement, company, schedule_date, context=None):
+    def _get_purchase_order_date(self, cr, uid, procurement, company,
+                                 schedule_date, context=None):
         """This method overload the method _get_order_dates in order to have a
             good calculation of the date.
         """
         cal_obj = self.pool['resource.calendar']
         delay = - int(procurement.product_id.seller_delay)
-        order_dates = cal_obj._get_date(cr, uid, None, schedule_date, delay,
-                                        context=context)
-        return order_dates
+        return cal_obj._get_date(cr, uid, None, schedule_date, delay,
+                                 context=context)
