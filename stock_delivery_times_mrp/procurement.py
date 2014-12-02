@@ -34,7 +34,12 @@ class procurement_order(orm.Model):
         cal_obj = self.pool['resource.calendar']
         start_date = datetime.strptime(procurement.date_planned,
                                        DEFAULT_SERVER_DATETIME_FORMAT)
-        days = (procurement.product_id.produce_delay or 0.0) + procurement.company_id.manufacturing_lead
+        #TODO FIXME maybe the sale delay should impact the
+        #procurement date. Indeed having it here is wrong
+        #when you produce sub-product
+        days = (procurement.product_id.produce_delay or 0.0) \
+               + procurement.company_id.manufacturing_lead \
+               + procurement.product_id.sale_delay
         cal_id = procurement.company_id.calendar_id.id
         date_planned = cal_obj._get_date(cr, uid, cal_id, start_date, -days,
                                          context=context)
