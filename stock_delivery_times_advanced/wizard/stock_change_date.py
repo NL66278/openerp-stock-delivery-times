@@ -126,7 +126,7 @@ class stock_change_date(orm.TransientModel):
                                   context=context)
             if move.change_supplier_shortage:
                 supplierinfo_id = supinfo_obj.search(
-                    cr, uid, [('product_id', '=', move.product_id.id),
+                    cr, uid, [('product_tmpl_id', '=', move.product_id.product_tmpl_id.id),
                               ('name', '=', change.picking_id.partner_id.id)],
                     context=context)
                 if not supplierinfo_id:
@@ -139,12 +139,12 @@ class stock_change_date(orm.TransientModel):
                                   {'supplier_shortage': move.supplier_shortage},
                                   context=context)
                 start_date = datetime.strptime(move.supplier_shortage,
-                                               DEFAULT_SERVER_DATE_FORMAT)
+                                               DEFAULT_SERVER_DATETIME_FORMAT)
                 date_expected = cal_obj._get_date(cr, uid, None, start_date,
                                                   supplierinfo.delay,
                                                   context=context)
                 move_lines = stock_move.search(
-                    cr, uid, [('product_id', '=', move.product_id.id),
+                    cr, uid, [('product_tmpl_id', '=', move.product_id.product_tmpl_id.id),
                               ('date_expected', '<', date_expected.strftime(DEFAULT_SERVER_DATETIME_FORMAT)),
                               ('picking_id.original_date', '>', change.picking_id.original_date)],
                     context=context)

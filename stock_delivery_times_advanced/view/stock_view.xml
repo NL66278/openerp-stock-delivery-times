@@ -14,7 +14,7 @@
                     <xpath expr="//button[@name='do_enter_transfer_details']" position="after">
                         <button name="%(action_change_date)d"
                             string="Change Expected Date"
-                            type="action" target="new"/>
+                            type="action" target="new" attrs="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
                     </xpath>
                 </data>
             </field>

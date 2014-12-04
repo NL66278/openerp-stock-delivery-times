@@ -89,16 +89,17 @@ class product_product(orm.Model):
             delay = (product.product_tmpl_id.seller_delay or 0.0) + product.product_tmpl_id.sale_delay
             all_supplierinfos = product.product_tmpl_id.seller_ids
             mainseller = product.product_tmpl_id.seller_id
-            if mainseller:
-                for supplierinfo in all_supplierinfos:
-                    if supplierinfo.name == mainseller:
-                        mainsupplierinfo = supplierinfo
-                mainsupplierinfo_obj = supplierinfo_obj.browse(cr, uid, mainsupplierinfo.id)
-            else:
-                mainsupplierinfo_obj = all_supplierinfos[0]
-            if mainsupplierinfo.supplier_shortage:
-                # TODO use a different calendar for the supplier delay than the company calendar
-                supplier_shortage = mainsupplierinfo_obj['supplier_shortage']
+            if all_supplierinfos:
+                if mainseller:
+                    for supplierinfo in all_supplierinfos:
+                        if supplierinfo.name == mainseller:
+                            mainsupplierinfo = supplierinfo
+                    mainsupplierinfo_obj = supplierinfo_obj.browse(cr, uid, mainsupplierinfo.id)
+                else:
+                    mainsupplierinfo_obj = all_supplierinfos[0]
+                if mainsupplierinfo.supplier_shortage:
+                    # TODO use a different calendar for the supplier delay than the company calendar
+                    supplier_shortage = mainsupplierinfo_obj['supplier_shortage']
         #add purchase lead time
         delay += self._get_company_po_lead(cr, uid, product, context=context)
         return delay, supplier_shortage
