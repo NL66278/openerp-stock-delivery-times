@@ -139,7 +139,7 @@ class stock_change_date(orm.TransientModel):
                                   {'supplier_shortage': move.supplier_shortage},
                                   context=context)
                 start_date = datetime.strptime(move.supplier_shortage,
-                                               DEFAULT_SERVER_DATETIME_FORMAT)
+                                               DEFAULT_SERVER_DATE_FORMAT)
                 date_expected = cal_obj._get_date(cr, uid, None, start_date,
                                                   supplierinfo.delay,
                                                   context=context)
