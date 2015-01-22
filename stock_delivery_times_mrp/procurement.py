@@ -55,7 +55,7 @@ class product_product(orm.Model):
         if product.supply_method == 'produce':
             if product.procure_method == 'make_to_order' or \
                 (product.procure_method == 'make_to_stock' and
-                 product.stock_available_immediately - qty <= 0):
+                 product.immediately_usable_qty - qty <= 0):
                 delay = product.produce_delay + product.sale_delay + product.company_id.manufacturing_lead
             else:
                 delay = product.sale_delay
