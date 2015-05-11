@@ -65,13 +65,15 @@ class procurement_order(orm.Model):
         return {}
 
     def run_scheduler(
-            self, cr, uid, automatic=False, use_new_cursor=False,
+            self, cr, uid, use_new_cursor=False, company_id=False,
             context=None):
         """ Runs through scheduler.
         @param use_new_cursor: boolean
         """
         super(procurement_order, self).run_scheduler(
-            cr, uid, context=context)
+            cr, uid, use_new_cursor=use_new_cursor, company_id=company_id,
+            context=context
+        )
         self._reschedule_procurement(
             cr, uid, use_new_cursor=use_new_cursor, context=context)
         return True
