@@ -6,7 +6,7 @@
         <record id="action_change_date" model="ir.actions.act_window">
             <field name="name">Change Expected Date</field>
             <field name="res_model">stock.change.date</field>
-            <field name="src_model">stock.picking.in</field>
+            <field name="src_model">stock.picking</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
