@@ -36,6 +36,8 @@ class sale_order_line(orm.Model):
         """This method determine if there is enough stock for a sale order and
             calculate the corresponding delay
         """
+        if context is None:
+            context = {}
         res = super(sale_order_line, self).product_id_change(
             cr, uid, ids, pricelist, product, qty, uom, qty_uos, uos, name,
             partner_id, lang, update_tax, date_order, packaging,
