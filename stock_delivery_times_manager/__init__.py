@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#    stock_delivery_times_delivery_date_on_move for OpenERP
+#    stock_delivery_times_manager for OpenERP
 #    Copyright (C) 2011-2014 Akretion
 #    Author: Benoît Guillot <benoit.guillot@akretion.com>
 #
@@ -19,4 +19,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-import stock
+from . import stock

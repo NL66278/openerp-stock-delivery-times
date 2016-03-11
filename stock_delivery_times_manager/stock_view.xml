@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  stock_delivery_times_manager for OpenERP
+  Copyright (C) 2011 Akretion Benoît Guillot <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+    <data>
+
+        <!-- INHERITED VIEW FOR THE OBJECT : incoming shipments -->
+
+
+        <record id="view_picking_in_form_max" model="ir.ui.view">
+            <field name="name">delivery_delays.stock.picking.in.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form" />
+            <field eval="16" name="priority"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="date" position="replace">
+                        <field name="original_date" string="Original Reception Date"/>
+                    </field>
+                    <field name="min_date" position="attributes">
+                        <attribute name="string">Reception Start Expected Date</attribute>
+                    </field>
+                    <field name="min_date" position="after">
+                        <field name="max_date" string="Reception End Expected Date"/>
+                    </field>
+                    <xpath expr="/form/notebook/page[2]/field[@name='company_id']" position="after">
+                        <field name="date"/>
+                    </xpath>
+                    <xpath expr="/form/notebook/page/field/form/group/field[@name='date_expected']" position="replace">
+                        <field name="date_expected" string="Reception Expected Date" on_change="onchange_date(date,date_expected)"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_picking_in_tree_max" model="ir.ui.view">
+            <field name="name">delivery_delays.stock.picking.in.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_in_tree" />
+            <field eval="16" name="priority"/>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="min_date" position="attributes">
+                        <attribute name="string">Reception Start Expected Date</attribute>
+                    </field>
+                    <field name="min_date" position="after">
+                        <field name="max_date" string="Reception End Expected Date"/>
+                        <field name="original_date" string="Original Reception Date"/>
+                        <field name="diff_days"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_picking_in_search_late" model="ir.ui.view">
+            <field name="name">delivery_delays.stock.picking.in.search</field>
+            <field name="model">stock.picking</field>
+	    <field name="inherit_id" ref="stock.view_picking_in_search" />
+            <field eval="30" name="priority"/>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <data>
+                     <xpath expr="/search/group/filter[@name='done']" position="after">
+                        <filter icon="terp-gnome-cpu-frequency-applet+" name="late" string="Late" domain="[('max_date','&lt;', (datetime.date.today()).strftime('%%Y-%%m-%%d %%H:%%M:%%S')),('state', '!=', 'done')]" help="Late Incoming Shipments" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- INHERITED VIEW FOR THE OBJECT : delivery orders -->
+
+        <record id="delivery_order_view_form" model="ir.ui.view">
+            <field name="name">delivery_delays.delivery_orders.view_picking_out_form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form" />
+            <field eval="16" name="priority"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="date" position="replace">
+                        <field name="original_date" string="Original Shipping Date"/>
+                    </field>
+                    <field name="min_date" position="replace">
+                        <field name="max_date" string="Shipping End Expected Date"/>
+                    </field>
+                    <xpath expr="/form/notebook/page[2]/field[5]" position="after">
+                        <field name="date"/>
+                    </xpath>
+                    <xpath expr="/form/notebook/page/field/tree/field[@name='date']" position="replace">
+                        <field name="date_expected" string="Shipping Expected Date"/>
+                    </xpath>
+                    <xpath expr="/form/notebook/page/field/form/group/field[@name='date_expected']" position="replace">
+                        <field name="date_expected" string="Shipping Expected Date" on_change="onchange_date(date,date_expected)"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_picking_out_tree_max" model="ir.ui.view">
+            <field name="name">delivery_delays.stock.picking.out.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_out_tree" />
+            <field eval="16" name="priority"/>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <data>
+                   <!-- <tree position="replace">
+                        <tree colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and max_date &lt; current_date" string="Delivery Orders"/>
+                    </tree> -->
+                    <field name="min_date" position="attributes">
+                        <attribute name="string">Shipping Expected Date</attribute>
+                        <attribute name="invisible">1</attribute>
+                    </field>
+                    <field name="min_date" position="after">
+                        <field name="max_date" string="Shipping End Expected Date"/>
+                        <field name="original_date" string="Original Shipping Date"/>
+                        <field name="diff_days"/>
+                        <field name="to_order"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_picking_out_search_late" model="ir.ui.view">
+            <field name="name">stock.picking.out.search</field>
+            <field name="model">stock.picking</field>
+	    <field name="inherit_id" ref="stock.view_picking_out_search" />
+            <field eval="16" name="priority"/>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <data>
+                     <xpath expr="/search/group/filter[@name='to_invoice']" position="after">
+                        <filter icon="terp-gnome-cpu-frequency-applet+" name="late" string="Late" domain="[('max_date','&lt;', (datetime.date.today()).strftime('%%Y-%%m-%%d %%H:%%M:%%S')),('state', '!=', 'done')]" help="Late delivery orders" />
+                        <filter icon="terp-gnome-cpu-frequency-applet+" name="to_order" string="To Order" domain="[('to_order', '=', 'True')]" help="Late delivery orders without purchase order" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+
+
+
+
+    </data>
+</openerp>

@@ -19,7 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-
 {
     'name': 'stock_delivery_delays_advanced',
     'version': '0.1',
@@ -32,16 +31,15 @@
         'sale',
         'stock_delivery_times_working_days',
         'purchase',
-        ],
+    ],
     'data': [
         'wizard/stock_change_date_view.xml',
-        'view/stock_view.xml',
-        'view/sale_view.xml',
-        'view/product_view.xml',
-        'view/product_data.xml',
-        ],
+        'stock_view.xml',
+        'sale_view.xml',
+        'product_view.xml',
+        'product_data.xml',
+    ],
     'demo': [],
     'installable': True,
     'active': False,
 }
-

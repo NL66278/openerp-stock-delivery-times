@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#    stock_delivery_times_same_date_planned for OpenERP
+#    stock_delivery_times_manager for OpenERP
 #    Copyright (C) 2011-2014 Akretion
 #    Author: Benoît Guillot <benoit.guillot@akretion.com>
 #
@@ -19,4 +19,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-from . import sale
+
+{
+    'name': 'stock_delivery_times_manager',
+    'version': '0.1',
+    'category': 'Generic Modules/Others',
+    'license': 'AGPL-3',
+    'description': """empty""",
+    'author': 'Akretion',
+    'website': 'http://www.akretion.com/',
+    'depends': ['stock'],
+    'data': [
+       'stock_view.xml',
+       'stock_data.xml',
+        ],
+    'demo': [],
+    'installable': False,
+    'active': False,
+}
+

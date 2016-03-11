@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#    stock_delivery_times_reschedule for OpenERP
+#    module for OpenERP
 #    Copyright (C) 2011-2014 Akretion
 #    Author: Benoît Guillot <benoit.guillot@akretion.com>
-#            Sebastien Beau <sebastien.beau@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,9 +18,6 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-import procurement
-import scheduler
-import company
-import product
-import sale
+###############################################################################
+from . import procurement
+

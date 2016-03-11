@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#    stock_delivery_times_advanced for OpenERP
+#    module for OpenERP
 #    Copyright (C) 2011-2014 Akretion
 #    Author: Benoît Guillot <benoit.guillot@akretion.com>
 #
@@ -19,7 +19,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-import stock
-import product
-import sale
-import purchase
+
+
+{
+    'name': 'stock_delivery_times_mrp',
+    'version': '0.1',
+    'category': 'Generic Modules/Others',
+    'license': 'AGPL-3',
+    'description': """empty""",
+    'author': 'Akretion',
+    'website': 'http://www.akretion.com/',
+    'depends': [
+        'stock_delivery_times_working_days',
+        'mrp',
+        ],
+    'data': [
+        ],
+    'demo': [],
+    'installable': True,
+    'active': False,
+}

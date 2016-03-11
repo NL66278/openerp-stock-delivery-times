@@ -35,8 +35,8 @@
         'stock_delivery_times_working_days',
         ],
     'data': [
-        'view/company_view.xml',
-        'view/procurement_view.xml',
+        'company_view.xml',
+        'procurement_view.xml',
         ],
     'demo': [],
     'installable': True,
