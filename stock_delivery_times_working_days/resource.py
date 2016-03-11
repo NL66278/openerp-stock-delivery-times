@@ -23,6 +23,7 @@ from openerp.osv import orm
 from datetime import timedelta, datetime
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp import SUPERUSER_ID
 
 
 class resource_calendar(orm.Model):
@@ -45,7 +46,7 @@ class resource_calendar(orm.Model):
                                      _('You need to define a calendar for the company !'))
             id = company['calendar_id'][0]
         dt_leave = self.get_leave_intervals(cr, uid, id, resource)
-        calendar_info = self.browse(cr, uid, id, context=context)
+        calendar_info = self.browse(cr, SUPERUSER_ID, id, context=context)
         worked_days = [day['dayofweek'] for day in calendar_info.attendance_ids]
         if delay < 0:
             delta = -1
