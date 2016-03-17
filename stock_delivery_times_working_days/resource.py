@@ -45,7 +45,7 @@ class resource_calendar(orm.Model):
                 raise orm.except_orm(_('Error !'),
                                      _('You need to define a calendar for the company !'))
             id = company['calendar_id'][0]
-        dt_leave = self._get_leaves(cr, uid, id, resource)
+        dt_leave = self.get_leave_intervals(cr, uid, id, resource)
         calendar_info = self.browse(cr, SUPERUSER_ID, id, context=context)
         worked_days = [day['dayofweek'] for day in calendar_info.attendance_ids]
         if delay < 0:

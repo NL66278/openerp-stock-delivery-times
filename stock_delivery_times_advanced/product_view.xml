@@ -42,7 +42,7 @@
                         domain="[('supplier_shortage','!=',False)]"
                         help="Products with the supplier in shortage"/>
                     <separator orientation="vertical"/>
-                    <field name="product_id" select="1"/>
+                    <field name="product_tmpl_id" select="1"/>
                     <field name="product_name" select="1"/>
                     <field name="name" select="1"/>
                     <field name="supplier_shortage" select="1"/>
@@ -51,13 +51,14 @@
             </field>
         </record>
 
+        <!--
         <record id="view_supplier_shortage_tree" model="ir.ui.view">
             <field name="name">product.supplierinfo.list.select</field>
             <field name="model">product.supplierinfo</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree editable="top" string="Supplier Shortage">
-                    <field name="product_id" />
+                    <field name="product_tmpl_id" />
                     <field name="product_name" />
                     <field name="product_code" />
                     <field name="name" />
@@ -92,6 +93,7 @@
             id="menu_supplier_shortage"
             parent="base.menu_product" sequence="3"
             groups="base.group_sale_salesman,base.group_sale_manager"/>
+        -->
 
     </data>
 </openerp>

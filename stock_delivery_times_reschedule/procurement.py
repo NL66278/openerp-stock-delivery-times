@@ -61,7 +61,7 @@ class procurement_order(orm.Model):
                 move_date = self._get_stock_move_date(cr, uid, procurement,
                                                       context=context)
                 #TODO force to recompute date for stock picking
-                move_obj.write(cr, uid, procurement.move_id.id,
+                move_obj.write(cr, uid, procurement.move_dest_id.id,
                                {'date_expected': move_date, 'date': move_date},
                                context=context)
         return True

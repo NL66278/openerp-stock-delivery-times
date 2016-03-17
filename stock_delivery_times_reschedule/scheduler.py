@@ -24,7 +24,7 @@ from openerp.osv import orm
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-import pooler
+from openerp import pooler
 
 
 class procurement_order(orm.Model):
@@ -33,7 +33,8 @@ class procurement_order(orm.Model):
     def _get_procurement_priority(self, cr, uid, ids, context=None):
         return 'priority, original_date_planned'
 
-    def _reschedule_procurement(self, cr, uid, use_new_cursor=False, context=None):
+    def _reschedule_procurement(
+            self, cr, uid, use_new_cursor=False, context=None):
         if context is None:
             context = {}
         if use_new_cursor:
@@ -42,7 +43,8 @@ class procurement_order(orm.Model):
             company_obj = self.pool['res.company']
             product_obj = self.pool['product.product']
             company_ids = company_obj.search(cr, uid, [], context=context)
-            for company in company_obj.browse(cr, uid, company_ids, context=context):
+            for company in company_obj.browse(
+                    cr, uid, company_ids, context=context):
                 range = company.reschedule_range
                 maxdate = datetime.today() + relativedelta(days=range)
                 maxdate = maxdate.strftime(DEFAULT_SERVER_DATE_FORMAT)
@@ -50,10 +52,8 @@ class procurement_order(orm.Model):
                     cr, uid, maxdate, company, context=context)
                 if recompute_prod_ids:
                     context['company_id'] = company.id
-                    product_obj.reschedule_all_procurement(cr, uid,
-                                                           recompute_prod_ids,
-                                                           maxdate,
-                                                           context=context)
+                    product_obj.reschedule_all_procurement(
+                        cr, uid, recompute_prod_ids, maxdate, context=context)
             if use_new_cursor:
                 cr.commit()
         finally:
@@ -64,13 +64,16 @@ class procurement_order(orm.Model):
                     pass
         return {}
 
-    def run_scheduler(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
-        ''' Runs through scheduler.
-        @param use_new_cursor: False or the dbname
-        '''
+    def run_scheduler(
+            self, cr, uid, use_new_cursor=False, company_id=False,
+            context=None):
+        """ Runs through scheduler.
+        @param use_new_cursor: boolean
+        """
         super(procurement_order, self).run_scheduler(
-            cr, uid, automatic=automatic, use_new_cursor=use_new_cursor,
-            context=context)
-        self._reschedule_procurement(cr, uid, use_new_cursor=use_new_cursor,
-                                     context=context)
+            cr, uid, use_new_cursor=use_new_cursor, company_id=company_id,
+            context=context
+        )
+        self._reschedule_procurement(
+            cr, uid, use_new_cursor=use_new_cursor, context=context)
         return True
