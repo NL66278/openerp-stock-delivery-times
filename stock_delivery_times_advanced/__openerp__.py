@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+
 {
     'name': 'stock_delivery_delays_advanced',
     'version': '0.1',
@@ -37,9 +38,9 @@
         'sale_view.xml',
         'product_view.xml',
         'product_data.xml',
-        'delivery_view.xml',
         ],
     'demo': [],
     'installable': True,
     'active': False,
 }
+

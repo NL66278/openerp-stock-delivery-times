@@ -19,6 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+
+
 {
     'name': 'stock_delivery_times_delivery_date_on_move',
     'version': '0.1',
@@ -35,3 +37,4 @@
     'installable': True,
     'active': False,
 }
+

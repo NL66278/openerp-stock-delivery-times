@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+###############################################################################
 #
 #    stock_delivery_times_reschedule for OpenERP
 #    Copyright (C) 2011-2014 Akretion
@@ -19,7 +19,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+###############################################################################
 from openerp.osv import orm, fields
 from datetime import datetime
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -30,8 +30,8 @@ class procurement_order(orm.Model):
 
     _columns = {
         'not_enough_stock': fields.boolean('Not Enough Stock'),
-        'original_date_planned': fields.datetime(
-            'Original Scheduled date', readonly=True),
+        'original_date_planned': fields.datetime('Original Scheduled date',
+                                                 readonly=True),
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -50,8 +50,7 @@ class procurement_order(orm.Model):
                                  context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
-        # If the expected date of the procurement is changed the stock move
-        # should be impacted.
+        #If the expected date of the procurement is changed the stock move should be impacted
         super(procurement_order, self).write(cr, uid, ids, vals,
                                              context=context)
         move_obj = self.pool['stock.move']
@@ -61,7 +60,7 @@ class procurement_order(orm.Model):
             for procurement in self.browse(cr, uid, ids, context=context):
                 move_date = self._get_stock_move_date(cr, uid, procurement,
                                                       context=context)
-                # TODO force to recompute date for stock picking
+                #TODO force to recompute date for stock picking
                 move_obj.write(cr, uid, procurement.move_dest_id.id,
                                {'date_expected': move_date, 'date': move_date},
                                context=context)
@@ -73,16 +72,10 @@ class procurement_order(orm.Model):
         self.write(cr, uid, ids, {'not_enough_stock': False}, context=context)
         return True
 
-    def _prepare_query(
-            self, cr, uid, procurement, order_point_id, ok, context=None):
-        return (
-            'update procurement_order'
-            ' set not_enough_stock=%s, message=%s'
-            ' where id=%s'
-        )
+    def _prepare_query(self, cr, uid, procurement, order_point_id, ok, context=None):
+        return 'update procurement_order set not_enough_stock=%s, message=%s where id=%s'
 
-    def _prepare_params(
-            self, cr, uid, procurement, order_point_id, ok, context=None):
+    def _prepare_params(self, cr, uid, procurement, order_point_id, ok, context=None):
         params = super(procurement_order, self)._prepare_params(
             cr, uid, procurement, order_point_id, ok, context=context)
         if order_point_id and not ok:
@@ -92,4 +85,3 @@ class procurement_order(orm.Model):
         params = (not_enough_stock,) + params
         return params
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
