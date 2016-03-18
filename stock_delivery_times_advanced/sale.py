@@ -43,7 +43,11 @@ class sale_order_line(orm.Model):
         product_obj = self.pool['product.product']
         if product_id:
             product = product_obj.browse(cr, uid, product_id, context=context)
-            res['value']['supplier_shortage'] = product.supplier_info_id and product.supplier_info_id.supplier_shortage or False
+            res['value']['supplier_shortage'] = (
+                product.seller_ids and
+                product.seller_ids.supplier_shortage or
+                False
+            )
         return res
 
 
