@@ -5,16 +5,15 @@
         <!-- INHERITED VIEW FOR THE OBJECT : delivery orders -->
 
         <record id="delivery_order_working_days_view_form" model="ir.ui.view">
-            <field name="name">working.days.delivery_orders.view_picking_out_form</field>
+            <field name="name">delivery_orders.view_picking_form</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form" />
+            <field name="inherit_id" ref="stock.view_picking_form" />
             <field eval="16" name="priority"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="/form/notebook/page[2]/field[5]" position="after">
+                    <field name="picking_type_id" position="after">
                         <field name="delivery_date"/>
-                    </xpath>
+                    </field>
                 </data>
             </field>
         </record>
