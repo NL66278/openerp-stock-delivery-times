@@ -81,25 +81,10 @@ class product_product(orm.Model):
     def _get_delays(self, cr, uid, product, qty=1, context=None):
         """Compute the delay information for a product
         """
-        supplier_shortage = False
         if (product.product_tmpl_id.immediately_usable_qty - qty) >= 0:  # TODO check is there is an incomming shipment for the product
             delay = product.product_tmpl_id.sale_delay
         else:
-            supplierinfo_obj = self.pool.get('product.supplierinfo')
             delay = (product.product_tmpl_id.seller_delay or 0.0) + product.product_tmpl_id.sale_delay
-            all_supplierinfos = product.product_tmpl_id.seller_ids
-            mainseller = product.product_tmpl_id.seller_id
-            if all_supplierinfos:
-                if mainseller:
-                    for supplierinfo in all_supplierinfos:
-                        if supplierinfo.name == mainseller:
-                            mainsupplierinfo = supplierinfo
-                    mainsupplierinfo_obj = supplierinfo_obj.browse(cr, uid, mainsupplierinfo.id)
-                else:
-                    mainsupplierinfo_obj = all_supplierinfos[0]
-                if mainsupplierinfo.supplier_shortage:
-                    # TODO use a different calendar for the supplier delay than the company calendar
-                    supplier_shortage = mainsupplierinfo_obj['supplier_shortage']
         #add purchase lead time
         delay += self._get_company_po_lead(cr, uid, product, context=context)
-        return delay, supplier_shortage
+        return delay
