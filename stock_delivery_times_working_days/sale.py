@@ -51,7 +51,7 @@ class sale_order(orm.Model):
 class sale_order_line(orm.Model):
     _inherit = "sale.order.line"
 
-    def product_id_change(self, cr, uid, ids, pricelist, product_id, qty=0,
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False,
             fiscal_position=False, flag=False, context=None):
@@ -61,11 +61,11 @@ class sale_order_line(orm.Model):
         if context is None:
             context = {}
         res = super(sale_order_line, self).product_id_change(
-            cr, uid, ids, pricelist, product_id, qty, uom, qty_uos, uos, name,
+            cr, uid, ids, pricelist, product, qty, uom, qty_uos, uos, name,
             partner_id, lang, update_tax, date_order, packaging,
             fiscal_position, flag, context=context)
         product_obj = self.pool['product.product']
-        if product_id:
+        if product:
             total_qty = 0
             if context.get('parent') and context.get('parent').get('id'):
                 order = self.pool['sale.order'].browse(
@@ -74,9 +74,11 @@ class sale_order_line(orm.Model):
                     if line_product.product_id.id == product_id and ids and line_product.id != ids[0]:
                         total_qty += line_product.product_uom_qty
             total_qty = total_qty + qty
-            product = product_obj.browse(cr, uid, product_id, context=context)
-            delay = product_obj._get_delays(cr, uid, product, qty=total_qty,
-                                            context=context)
+            product_record = product_obj.browse(cr, uid, product, context=context)
+            delay = product_obj._get_delays(
+                cr, uid, product_record, qty=total_qty,
+                context=context
+            )
             res['value']['delay'] = delay
         return res
 

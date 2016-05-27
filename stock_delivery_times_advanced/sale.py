@@ -29,7 +29,7 @@ class sale_order_line(orm.Model):
         'supplier_shortage': fields.date('Supplier Shortage'),
     }
 
-    def product_id_change(self, cr, uid, ids, pricelist, product_id, qty=0,
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False,
             fiscal_position=False, flag=False, context=None):
@@ -37,15 +37,15 @@ class sale_order_line(orm.Model):
             calculate the corresponding delay
         """
         res = super(sale_order_line, self).product_id_change(
-            cr, uid, ids, pricelist, product_id, qty, uom, qty_uos, uos, name,
+            cr, uid, ids, pricelist, product, qty, uom, qty_uos, uos, name,
             partner_id, lang, update_tax, date_order, packaging,
             fiscal_position, flag, context=context)
         product_obj = self.pool['product.product']
-        if product_id:
-            product = product_obj.browse(cr, uid, product_id, context=context)
+        if product:
+            product_record = product_obj.browse(cr, uid, product, context=context)
             res['value']['supplier_shortage'] = (
-                product.seller_ids and
-                product.seller_ids[0].supplier_shortage or
+                product_record.seller_ids and
+                product_record.seller_ids[0].supplier_shortage or
                 False
             )
         return res
